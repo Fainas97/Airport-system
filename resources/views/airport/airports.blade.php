@@ -21,11 +21,15 @@
             <td class="align-middle">{{$airport->lng}} - {{$airport->lat}}</td>
             <td align="center">
                 <div class="actions">
-                    <a href="{{route('air.edit', $airport->id)}}" class="btn btn-warning">Edit</a>
+                    <a href="{{route('air.edit', $airport->id)}}" class="btn btn-warning" title="Edit">
+                        <i class="fa fa-pencil"></i>
+                    </a>
                     <form class="form" action="{{ route('air.destroy', $airport->id) }}" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button class="btn btn-danger" type="submit">Delete</button>
+                        <button class="btn btn-danger" type="submit" title="Delete">
+                            <i class="fa fa-trash"></i>
+                        </button>
                     </form>
                 </div>
             </td>
@@ -34,7 +38,9 @@
     </tbody>
 </table>
 <div class="inline-space">
-    <a href="{{ route('air.create') }}" class="btn btn-primary">Add airport</a>
+    <a href="{{ route('air.create') }}" class="btn btn-primary">
+        <i class="fa fa-plus"></i> Add airport
+    </a>
 </div>
 {{ $airports->links() }}
 @endsection

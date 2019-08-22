@@ -26,7 +26,10 @@ class CompanyRequest extends FormRequest
     {
         return [
             'country_id' => 'required|numeric',
-            'name' => ['required', 'alpha_num', Rule::unique('companies')->ignore($this->route('id')), 'max:40'],
+            'name' => ['required',
+                'alpha_num',
+                Rule::unique('companies')->ignore($this->route('id')),
+                'max:40'],
         ];
     }
 }

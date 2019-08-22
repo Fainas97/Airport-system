@@ -17,11 +17,13 @@
             <td class="align-middle">{{$company->country->name}} - {{$company->country->ISO}}</td>
             <td align="center">
                 <div class="actions">
-                    <a href="{{route('com.edit', $company->id)}}" class="btn btn-warning">Edit</a>
+                    <a href="{{route('com.edit', $company->id)}}" class="btn btn-warning" title="Edit">
+                        <i class="fa fa-pencil"></i>
+                    </a>
                     <form class="form" action="{{ route('com.destroy', $company->id) }}" method="POST">
                         @method('DELETE')
                         @csrf
-                        <button class="btn btn-danger" type="submit">Delete</button>
+                        <button class="btn btn-danger" type="submit" title="Delete"><i class="fa fa-trash"></i></button>
                     </form>
                 </div>
             </td>
@@ -30,7 +32,9 @@
     </tbody>
 </table>
 <div class="inline-space">
-    <a href="{{ route('com.create') }}" class="btn btn-primary">Add company</a>
+    <a href="{{ route('com.create') }}" class="btn btn-primary">
+        <i class="fa fa-plus"></i> Add company
+    </a>
 </div>
 {{ $companies->links() }}
 @endsection
