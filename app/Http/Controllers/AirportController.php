@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Airport;
+use App\Company;
 
 class AirportController extends Controller
 {
-    private $airport;
+    private $airport, $company;
 
-    public function __construct(Airport $airport)
+    public function __construct(Airport $airport, Company $company)
     {
         $this->airport = $airport;
+        $this->company = $company;
     }
 
     /**
@@ -21,7 +23,7 @@ class AirportController extends Controller
      */
     public function index()
     {
-        $airports = $this->airport->paginate(6);
+        $airports = $this->airport->paginate(8);
         return view('airport.airports', compact('airports'));
     }
 
@@ -93,4 +95,29 @@ class AirportController extends Controller
         $this->airport->findOrFail($id)->delete();
         return redirect('/airports')->withSuccess('Airport has been deleted');
     }
+
+    public function assign($id, $company)
+    {
+        $airport = $this->airport->findOrFail($id);
+        $company = $this->company->findOrFail($company);
+
+        if ($airport->companies()->where('company_id', $company->id)->exists()) {
+            return redirect('/airports')->withErrors(['error', 'Company already assigned to airport']);
+        }
+        $airport->companies()->attach($company);
+        return redirect('/airports')->with('success', 'Company assigned');
+    }
+
+    public function unassign($id, $company)
+    {
+        $airport = $this->airport->findOrFail($id);
+        $company = $this->company->findOrFail($company);
+
+        if (!$airport->companies()->where('company_id', $company->id)->exists()) {
+            return redirect('/airports')->with(['error' => 'Company already unassigned from this airport']);
+        }
+        $airport->companies()->detach($company);
+        return redirect('/airports')->with('success', 'Company unassigned');
+    }
+
 }

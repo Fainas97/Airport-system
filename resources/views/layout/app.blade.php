@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
+
 <head>
     <title>@yield('title')</title>
     <meta charset="UTF-8">
@@ -9,12 +10,25 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
+
 <body>
     <div class="header">
         <h1>@yield('header')</h1>
     </div>
     <div class="container">
-        <ul class="nav nav-tabs">
+        @if(session('success'))
+        <div class="success" style="text-align: center">
+            <p>{{session('success')}}</p>
+        </div>
+        @endif
+        @if($errors->any())
+        @foreach ($errors->all() as $error)
+        <div class="errors" style="text-align: center">
+            <p>{{ $error }}</p>
+        </div>
+        @endforeach
+        @endif
+        <ul class="nav nav-tabs" style="border: none;">
             <li class="nav-item">
                 <a href="/airports" class="nav-link {{Request::path() == 'airports' ? 'active' : ''}}">
                     Airports
@@ -38,4 +52,5 @@
 
     </script>
 </body>
+
 </html>

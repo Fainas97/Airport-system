@@ -21,7 +21,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $countries = $this->country->get();
+        $countries = $this->country->paginate(10);
         return view('countries', compact('countries'));
     }
 }

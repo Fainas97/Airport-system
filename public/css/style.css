@@ -5,11 +5,32 @@
     padding: 20px;
 }
 
-.container {
-
+.review {
+    width: 50%;
+    margin: 0 auto;
 }
 
 .actions {
     display: flex;
     justify-content: space-evenly;
+}
+
+.inline-space {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.data-form {
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    background-color: white;
+}
+
+.errors {
+    color: red;
+}
+
+.success {
+    color: green;
 }

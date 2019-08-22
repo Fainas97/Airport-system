@@ -16,7 +16,7 @@ Route::group(['prefix' => 'airports'], function () {
     Route::get('/', 'AirportController@index');
     
     Route::get('/create', 'AirportController@create')->name('air.create');
-    Route::post('/create', 'AirportController@store');
+    Route::post('/create', 'AirportController@store')->name('air.store');
 
     Route::get('/{id}', 'AirportController@show')->name('air.show');
 
@@ -24,6 +24,9 @@ Route::group(['prefix' => 'airports'], function () {
     Route::put('/{id}/update', 'AirportController@update')->name('air.update');
 
     Route::delete('/{id}', 'AirportController@destroy')->name('air.destroy');
+
+    Route::post('/{id}/assign/{company}', 'AirportController@assign')->name('assign');
+    Route::post('/{id}/unassign/{company}', 'AirportController@unassign')->name('unassign');
 });
 
 Route::group(['prefix' => 'companies'], function () {
@@ -31,7 +34,7 @@ Route::group(['prefix' => 'companies'], function () {
     Route::get('/', 'CompanyController@index');
     
     Route::get('/create', 'CompanyController@create')->name('com.create');
-    Route::post('/create', 'CompanyController@store');
+    Route::post('/create', 'CompanyController@store')->name('com.store');
 
     Route::get('/{id}', 'CompanyController@show')->name('com.show');
 

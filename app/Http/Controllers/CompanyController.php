@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CompanyRequest;
 use App\Company;
+use App\Country;
 
 class CompanyController extends Controller
 {
     private $company;
+    private $country;
 
-    public function __construct(Company $company)
+    public function __construct(Company $company, Country $country)
     {
         $this->company = $company;
+        $this->country = $country;
     }
 
     /**
@@ -21,7 +24,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = $this->company->with('country')->get();
+        $companies = $this->company->with('country')->paginate(8);
         return view('company.companies', compact('companies'));
     }
 
@@ -32,17 +35,19 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('company.createCompany');
+        $countries = $this->country->get();
+        return view('company.createCompany', compact('countries'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\CompanyRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
+        $this->company->create($request->validated());
         return redirect('/companies')->withSuccess('Company has been added');
     }
 
@@ -55,7 +60,7 @@ class CompanyController extends Controller
     public function show($id)
     {
         $company = $this->company->with('country')->findOrFail($id);
-        return view ('company.showCompany', compact('company'));
+        return view('company.showCompany', compact('company'));
     }
 
     /**
@@ -66,20 +71,22 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        $company = $this->company->with('country')->findOrFail($id);
-        return view ('company.showCompany', compact('company'));
+        $company = $this->company->findOrFail($id);
+        $countries = $this->country->get();
+        return view('company.editCompany', compact('company', 'countries'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\CompanyRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CompanyRequest $request, $id)
     {
-        return redirect('/companies/' . $id)->withSuccess('Company has been updated');
+        $this->company->findOrFail($id)->update($request->validated());
+        return redirect('/companies')->withSuccess('Company has been updated');
     }
 
     /**

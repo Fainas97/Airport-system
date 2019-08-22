@@ -19,7 +19,6 @@ class CreateAirportsTable extends Migration
             $table->string('country');
             $table->decimal('lng', 11 , 8);
             $table->decimal('lat', 10 , 8);
-            $table->integer('company_id');
             $table->timestamps();
         });
     }
