@@ -21,8 +21,8 @@ class AirportController extends Controller
      */
     public function index()
     {
-        $airports = $this->airport->get();
-        return view('airport.airports', compact('airpots'));
+        $airports = $this->airport->paginate(6);
+        return view('airport.airports', compact('airports'));
     }
 
     /**
