@@ -18,13 +18,13 @@
     </div>
     <div class="container">
         @if(session('success'))
-        <div class="success" style="text-align: center">
+        <div class="success">
             <p>{{session('success')}}</p>
         </div>
         @endif
         @if($errors->any())
         @foreach ($errors->all() as $error)
-        <div class="errors" style="text-align: center">
+        <div class="errors">
             <p>{{ $error }}</p>
         </div>
         @endforeach
@@ -49,9 +49,6 @@
         @yield('content')
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
-    <script>
-
-    </script>
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\AirportRequest;
 use App\Airport;
 use App\Company;
 
@@ -34,17 +34,22 @@ class AirportController extends Controller
      */
     public function create()
     {
-        return view('airport.createAirport');
+        $companies = $this->company->get();
+        return view('airport.createAirport', compact('companies'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\AirportRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AirportRequest $request)
     {
+        $companies_ids = $request->only('companies');
+
+        $this->airport->create($request->only('name'));
+
         return redirect('/airports')->withSuccess('Airport has been added');
     }
 
@@ -75,7 +80,7 @@ class AirportController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

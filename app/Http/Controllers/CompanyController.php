@@ -42,7 +42,7 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\CompanyRequest  $request
+     * @param  App\Http\Requests\CompanyRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(CompanyRequest $request)
@@ -59,7 +59,7 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        $company = $this->company->with('country')->findOrFail($id);
+        $company = $this->company->with('country', 'airports')->findOrFail($id);
         return view('company.showCompany', compact('company'));
     }
 
@@ -79,7 +79,7 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\CompanyRequest  $request
+     * @param  App\Http\Requests\CompanyRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

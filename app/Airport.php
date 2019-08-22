@@ -8,6 +8,6 @@ class Airport extends Model
 {
     public function companies()
     {
-        return $this->belongsToMany('App\Company');
+        return $this->hasMany('App\Company');
     }
 }

@@ -15,6 +15,6 @@ class Company extends Model
 
     public function airports()
     {
-        return $this->hasMany('App\Airport');
+        return $this->belongsToMany('App\Airport');
     }
 }

@@ -13,7 +13,9 @@
     <tbody>
         @foreach($companies as $company)
         <tr>
-            <td class="align-middle">{{$company->name}}</td>
+            <td class="align-middle">
+                <a href="/companies/{{$company->id}}">{{$company->name}}</a>
+            </td>
             <td class="align-middle">{{$company->country->name}} - {{$company->country->ISO}}</td>
             <td align="center">
                 <div class="actions">
