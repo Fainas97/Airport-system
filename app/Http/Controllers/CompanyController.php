@@ -97,7 +97,9 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        $this->company->findOrFail($id)->delete();
+        $company = $this->company->findOrFail($id);
+        $company->airports()->sync([]);
+        $company->delete();
         return redirect('/companies')->withSuccess('Company has been deleted');
     }
 }

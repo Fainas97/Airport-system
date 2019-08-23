@@ -15,6 +15,6 @@ class Company extends Model
 
     public function airports()
     {
-        return $this->belongsToMany('App\Airport');
+        return $this->belongsToMany(Airport::class);
     }
 }

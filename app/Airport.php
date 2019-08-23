@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Airport extends Model
 {
+    protected $fillable = [ 'name', 'country', 'lng', 'lat'];
+
     public function companies()
     {
-        return $this->hasMany('App\Company');
+        return $this->belongsToMany(Company::class);
     }
 }

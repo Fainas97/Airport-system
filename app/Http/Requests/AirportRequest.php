@@ -27,9 +27,12 @@ class AirportRequest extends FormRequest
         return [
             'companies' => 'required',
             'name' => ['required',
-                'alpha_num',
+                'string',
                 Rule::unique('airports')->ignore($this->route('id')),
                 'max:50'],
+            'lat' => 'required|regex:/^-?[0-9]{1,2}(?:\.[0-9]{8})?$/',
+            'lng' => 'required|regex:/^-?[0-9]{1,3}(?:\.[0-9]{8})?$/',
+            'country' => 'required|alpha'
         ];
     }
 }

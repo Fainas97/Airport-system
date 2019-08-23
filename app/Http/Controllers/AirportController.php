@@ -46,10 +46,8 @@ class AirportController extends Controller
      */
     public function store(AirportRequest $request)
     {
-        $companies_ids = $request->only('companies');
-
-        $this->airport->create($request->only('name'));
-
+        $airport = $this->airport->create($request->validated())
+            ->companies()->sync($request->only('companies')['companies']);
         return redirect('/airports')->withSuccess('Airport has been added');
     }
 
@@ -74,18 +72,22 @@ class AirportController extends Controller
     public function edit($id)
     {
         $airport = $this->airport->with('companies')->findOrfail($id);
-        return view('airport.editAirport', compact('airport'));
+        $companies = $this->company->get();
+        return view('airport.editAirport', compact('airport', 'companies'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\Request  $request
+     * @param  App\Http\Requests\AirportRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AirportRequest $request, $id)
     {
+        $airport = $this->airport->findOrFail($id);
+        $airport->update($request->validated());
+        $airport->companies()->sync($request->only('companies')['companies']);
         return redirect('/airports/' . $id)->withSuccess('Airport has been updated');
     }
 
@@ -97,32 +99,9 @@ class AirportController extends Controller
      */
     public function destroy($id)
     {
-        $this->airport->findOrFail($id)->delete();
+        $airport = $this->airport->findOrFail($id);
+        $airport->companies()->sync([]);
+        $airport->delete();
         return redirect('/airports')->withSuccess('Airport has been deleted');
     }
-
-    public function assign($id, $company)
-    {
-        $airport = $this->airport->findOrFail($id);
-        $company = $this->company->findOrFail($company);
-
-        if ($airport->companies()->where('company_id', $company->id)->exists()) {
-            return redirect('/airports')->withErrors(['error', 'Company already assigned to airport']);
-        }
-        $airport->companies()->attach($company);
-        return redirect('/airports')->with('success', 'Company assigned');
-    }
-
-    public function unassign($id, $company)
-    {
-        $airport = $this->airport->findOrFail($id);
-        $company = $this->company->findOrFail($company);
-
-        if (!$airport->companies()->where('company_id', $company->id)->exists()) {
-            return redirect('/airports')->with(['error' => 'Company already unassigned from this airport']);
-        }
-        $airport->companies()->detach($company);
-        return redirect('/airports')->with('success', 'Company unassigned');
-    }
-
 }
