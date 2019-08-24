@@ -18,8 +18,9 @@
 
 .inline-space {
     display: flex;
-    justify-content: flex-end;
     margin-bottom: 10px;
+    justify-content: space-between;
+    max-height: 35px;
 }
 
 .data-form {

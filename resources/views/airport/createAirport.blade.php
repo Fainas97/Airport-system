@@ -35,20 +35,20 @@
 </div>
 @push('scripts')
 <script>
-var lat
-var lng
+var lat = {!! old('lat', 50) !!}
+var lng = {!! old('lng', 10) !!}
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
     center: {
-        lat: {!! old('lat', 50) !!},
-        lng: {!! old('lng', 10) !!}
+        lat: this.lat,
+        lng: this.lng
     },
     zoom: 3
 })
 
 var marker = new google.maps.Marker({
     position: {
-        lat: {!! old('lat', 50) !!},
-        lng: {!! old('lng', 10) !!}
+        lat: this.lat,
+        lng: this.lng
     },
     map: map,
     draggable: true

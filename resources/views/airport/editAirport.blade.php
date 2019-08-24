@@ -2,7 +2,7 @@
 @section('title', 'Edit airport')
 @section('header', 'Edit airport')
 @section('content')
-@php 
+@php
 $companiesIds = $airport->companies->pluck('id')->toArray();
 @endphp
 <div class="data-form">
@@ -15,7 +15,8 @@ $companiesIds = $airport->companies->pluck('id')->toArray();
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="name">Airport name</label>
-                <input type="text" class="form-control" value="{{$airport->name}}" name="name" placeholder="Airport name">
+                <input type="text" class="form-control" value="{{$airport->name}}" name="name"
+                    placeholder="Airport name">
             </div>
             <div class="form-group col-md-6">
                 <label for="country_id">Companies</label>
@@ -39,20 +40,20 @@ $companiesIds = $airport->companies->pluck('id')->toArray();
 </div>
 @push('scripts')
 <script>
-var lat
-var lng
+var lat = {!! $airport->lat !!}
+var lng = {!! $airport->lng !!}
 var map = new google.maps.Map(document.getElementById('map-canvas'), {
     center: {
-        lat: {!! $airport->lat !!},
-        lng: {!! $airport->lng  !!}
+        lat: this.lat,
+        lng: this.lng
     },
     zoom: 3
 })
 
 var marker = new google.maps.Marker({
     position: {
-        lat: {!! $airport->lat !!},
-        lng: {!! $airport->lng  !!}
+        lat: this.lat,
+        lng: this.lng
     },
     map: map,
     draggable: true

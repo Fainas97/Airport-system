@@ -22,11 +22,10 @@
                     <a href="{{route('com.edit', $company->id)}}" class="btn btn-warning" title="Edit">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <form class="form" action="{{ route('com.destroy', $company->id) }}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <button class="btn btn-danger" type="submit" title="Delete"><i class="fa fa-trash"></i></button>
-                    </form>
+                    <a data-toggle="modal" onclick="deleteData({{$company->id}}, '{{$company->name}}')" 
+                        data-target="#DeleteModal" class="btn btn-danger" title="Delete">
+                        <i class="fa fa-trash"></i>
+                    </a>
                 </div>
             </td>
         </tr>
@@ -34,9 +33,26 @@
     </tbody>
 </table>
 <div class="inline-space">
-    <a href="{{ route('com.create') }}" class="btn btn-primary">
-        <i class="fa fa-plus"></i> Add company
-    </a>
+    <div>{{ $companies->links() }}</div>
+    <div>
+        <a href="{{ route('com.create') }}" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Add company
+        </a>
+    </div>
 </div>
-{{ $companies->links() }}
+@include('modal')
+@push('scripts')
+<script>
+function deleteData(id, name) {
+    var url = '{{ route("com.destroy", ":id") }}'
+    url = url.replace(':id', id)
+    document.getElementById("deleteInfo").innerText = 'Deleting company - ' + name
+    $("#deleteForm").attr('action', url)
+}
+
+function formSubmit() {
+    $("#deleteForm").submit();
+}
+</script>
+@endpush
 @endsection

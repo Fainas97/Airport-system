@@ -7,8 +7,9 @@
         <tr>
             <th style="width: 25%">Name</th>
             <th style="width: 25%">Country</th>
-            <th style="width: 35%">Coordinates</th>
-            <th class="align-middle" style="width: 15%">Actions</th>
+            <th style="width: 17%">Latitude</th>
+            <th style="width: 17%">Longitude</th>
+            <th class="align-middle" style="width: 16%">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -18,19 +19,17 @@
                 <a href="/airports/{{$airport->id}}">{{$airport->name}}</a>
             </td>
             <td class="align-middle">{{$airport->country}}</td>
-            <td class="align-middle">{{$airport->lng}} - {{$airport->lat}}</td>
+            <td class="align-middle">{{$airport->lat}}</td>
+            <td class="align-middle">{{$airport->lng}}</td>
             <td align="center">
                 <div class="actions">
                     <a href="{{route('air.edit', $airport->id)}}" class="btn btn-warning" title="Edit">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <form class="form" action="{{ route('air.destroy', $airport->id) }}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <button class="btn btn-danger" type="submit" title="Delete">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </form>
+                    <a data-toggle="modal" onclick="deleteData({{$airport->id}}, '{{$airport->name}}')" 
+                        data-target="#DeleteModal" class="btn btn-danger" title="Delete">
+                        <i class="fa fa-trash"></i>
+                    </a>
                 </div>
             </td>
         </tr>
@@ -38,9 +37,26 @@
     </tbody>
 </table>
 <div class="inline-space">
-    <a href="{{ route('air.create') }}" class="btn btn-primary">
-        <i class="fa fa-plus"></i> Add airport
-    </a>
+    <div>{{ $airports->links() }}</div>
+    <div>
+        <a href="{{ route('air.create') }}" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Add airport
+        </a>
+    </div>
 </div>
-{{ $airports->links() }}
+@include('modal')
+@push('scripts')
+<script>
+function deleteData(id, name) {
+    var url = '{{ route("air.destroy", ":id") }}'
+    url = url.replace(':id', id)
+    document.getElementById("deleteInfo").innerText = 'Deleting airport - ' + name
+    $("#deleteForm").attr('action', url)
+}
+
+function formSubmit() {
+    $("#deleteForm").submit();
+}
+</script>
+@endpush
 @endsection

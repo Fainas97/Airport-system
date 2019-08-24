@@ -86,7 +86,7 @@ class CompanyController extends Controller
     public function update(CompanyRequest $request, $id)
     {
         $this->company->findOrFail($id)->update($request->validated());
-        return redirect('/companies')->withSuccess('Company has been updated');
+        return redirect('/companies/' . $id)->withSuccess('Company has been updated');
     }
 
     /**
