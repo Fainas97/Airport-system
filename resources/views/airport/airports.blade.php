@@ -13,6 +13,7 @@
         </tr>
     </thead>
     <tbody>
+        @if($airports->count() > 0)
         @foreach($airports as $airport)
         <tr>
             <td class="align-middle">
@@ -26,7 +27,7 @@
                     <a href="{{route('air.edit', $airport->id)}}" class="btn btn-warning" title="Edit">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <a data-toggle="modal" onclick="deleteData({{$airport->id}}, '{{$airport->name}}')" 
+                    <a data-toggle="modal" onclick="deleteData({{$airport->id}}, '{{$airport->name}}')"
                         data-target="#DeleteModal" class="btn btn-danger" title="Delete">
                         <i class="fa fa-trash"></i>
                     </a>
@@ -34,6 +35,11 @@
             </td>
         </tr>
         @endforeach
+        @else
+        <tr>
+            <td colspan="5" align="center">Zero airports available</td>
+        </tr>
+        @endif
     </tbody>
 </table>
 <div class="inline-space">

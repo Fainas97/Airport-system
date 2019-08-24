@@ -11,6 +11,7 @@
         </tr>
     </thead>
     <tbody>
+        @if($companies->count() > 0)
         @foreach($companies as $company)
         <tr>
             <td class="align-middle">
@@ -22,7 +23,7 @@
                     <a href="{{route('com.edit', $company->id)}}" class="btn btn-warning" title="Edit">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <a data-toggle="modal" onclick="deleteData({{$company->id}}, '{{$company->name}}')" 
+                    <a data-toggle="modal" onclick="deleteData({{$company->id}}, '{{$company->name}}')"
                         data-target="#DeleteModal" class="btn btn-danger" title="Delete">
                         <i class="fa fa-trash"></i>
                     </a>
@@ -30,6 +31,11 @@
             </td>
         </tr>
         @endforeach
+        @else
+        <tr>
+            <td colspan="3" align="center">Zero companies available</td>
+        </tr>
+        @endif
     </tbody>
 </table>
 <div class="inline-space">
