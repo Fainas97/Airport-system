@@ -20,6 +20,13 @@ class Company extends Model
 
     public function selectedCountryCompaniesAirports($country)
     {
-        return $this->with('airports')->where('country_id', $country)->paginate(10);
+        return $this->with(['airports' => function ($join) {
+            $join->groupBy('airports.name');
+        }])
+            ->where('country_id', $country)
+            ->paginate(10)
+            ->pluck('airports')
+            ->pluck('0')
+            ->paginate(10);
     }
 }

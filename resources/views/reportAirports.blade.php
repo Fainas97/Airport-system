@@ -7,17 +7,21 @@
         <tr>
             <th>Name</th>
             <th>Country</th>
-            <th>Company</th>
         </tr>
     </thead>
     <tbody>
+        @if ($airports->count() > 0)
         @foreach($airports as $airport)
         <tr>
-            <td>{{$airport->airportName}}</td>
-            <td>{{$countryName}}</td>
-            <td>{{$airport->companyName}}</td>
+            <td>{{$airport->name}}</td>
+            <td>{{$airport->country}}</td>
         </tr>
         @endforeach
+        @else
+        <tr>
+            <td colspan="2">Companies in this country do not exist or work with zero airports</td>
+        </tr>
+        @endif
     </tbody>
 </table>
 {{ $airports->links() }}

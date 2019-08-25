@@ -15,7 +15,7 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" style="max-height: 37px">Filter</button>
+        <button type="submit" class="btn btn-primary">Filter</button>
     </form>
 </div>
 @endsection

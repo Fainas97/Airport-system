@@ -112,10 +112,10 @@ class CompanyController extends Controller
 
     public function thirdReport(Request $request)
     {
-        $country = (int)$request->only('country_id');
-        $countryName = $this->country->findOrFail($country, 'name');
-        $title = $countryName . 'companies airports';
-        $airports = $this->company->selectedCountryCompaniesAirports($country);
-        return view('reportAirports', compact('airports', 'title', 'countryName'));
+        $countryId = (int)$request->country_id;
+        $country = $this->country->findOrFail($countryId);
+        $title = $country->name . ' companies airports';
+        $airports = $this->company->selectedCountryCompaniesAirports($countryId);
+        return view('reportAirports', compact('airports', 'title'));
     }
 }
