@@ -24,9 +24,6 @@ Route::group(['prefix' => 'airports'], function () {
     Route::put('/{id}/update', 'AirportController@update')->name('air.update');
 
     Route::delete('/{id}', 'AirportController@destroy')->name('air.destroy');
-
-    Route::post('/{id}/assign/{company}', 'AirportController@assign')->name('assign');
-    Route::post('/{id}/unassign/{company}', 'AirportController@unassign')->name('unassign');
 });
 
 Route::group(['prefix' => 'companies'], function () {
@@ -42,11 +39,18 @@ Route::group(['prefix' => 'companies'], function () {
     Route::put('/{id}/update', 'CompanyController@update')->name('com.update');
 
     Route::delete('/{id}', 'CompanyController@destroy')->name('com.destroy');
+
+    Route::get('/report/third', 'CompanyController@reportView');
+
+    Route::post('/report', 'CompanyController@thirdReport')->name('rep.filter');
 });
 
 Route::group(['prefix' => 'countries'], function () {
 
     Route::get('/', 'CountryController@index');
+
+    Route::get('/report/first', 'CountryController@firstReport');
+    Route::get('/report/second', 'CountryController@secondReport');
 });
 
 Route::any('/{any}', function () {

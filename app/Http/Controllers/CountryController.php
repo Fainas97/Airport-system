@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Airport;
 use App\Country;
 
 class CountryController extends Controller
@@ -23,5 +23,19 @@ class CountryController extends Controller
     {
         $countries = $this->country->paginate(10);
         return view('countries', compact('countries'));
+    }
+
+    public function firstReport()
+    {
+        $title = "Countries Without Companies";
+        $countries = $this->country->countriesWithoutCompanies();
+        return view('report', compact('countries', 'title'));
+    }
+
+    public function secondReport()
+    {
+        $title = "Countries Without Companies and Airports";
+        $countries = $this->country->countriesWithoutCompaniesAirports();
+        return view('report', compact('countries', 'title'));
     }
 }

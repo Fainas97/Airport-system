@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyRequest;
 use App\Company;
 use App\Country;
+use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    private $company;
-    private $country;
+    private $company, $country;
 
     public function __construct(Company $company, Country $country)
     {
@@ -101,5 +101,21 @@ class CompanyController extends Controller
         $company->airports()->sync([]);
         $company->delete();
         return redirect('/companies')->withSuccess('Company has been deleted');
+    }
+
+    public function reportView()
+    {
+        $title = "Selected companies airports";
+        $countries = $this->country->get();
+        return view('reportFilter', compact('countries', 'title'));
+    }
+
+    public function thirdReport(Request $request)
+    {
+        $country = (int)$request->only('country_id');
+        $countryName = $this->country->findOrFail($country, 'name');
+        $title = $countryName . 'companies airports';
+        $airports = $this->company->selectedCountryCompaniesAirports($country);
+        return view('reportAirports', compact('airports', 'title', 'countryName'));
     }
 }

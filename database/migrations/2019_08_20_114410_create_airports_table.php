@@ -17,8 +17,8 @@ class CreateAirportsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('country');
-            $table->decimal('lng', 11 , 8);
             $table->decimal('lat', 10 , 8);
+            $table->decimal('lng', 11 , 8);
             $table->timestamps();
         });
     }

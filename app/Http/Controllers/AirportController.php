@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AirportRequest;
 use App\Airport;
 use App\Company;
+use App\Country;
 
 class AirportController extends Controller
 {
-    private $airport, $company;
+    private $airport, $company, $country;
 
-    public function __construct(Airport $airport, Company $company)
+    public function __construct(Airport $airport, Company $company, Country $country)
     {
         $this->airport = $airport;
         $this->company = $company;
+        $this->country = $country;
     }
 
     /**

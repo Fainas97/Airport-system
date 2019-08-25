@@ -47,6 +47,15 @@
                     Countries
                 </a>
             </li>
+            <li class="dropdown" style="line-height: 40px">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/countries/report/first">Countries without companies</a></li>
+                    <li><a href="/countries/report/second">Countries without companies and airports</a></li>
+                    <li><a href="/companies/report/third">Companies destinations</a></li>
+                </ul>
+            </li>
         </ul>
         @yield('content')
     </div>
