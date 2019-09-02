@@ -24,9 +24,8 @@ class Company extends Model
             $join->groupBy('airports.name');
         }])
             ->where('country_id', $country)
-            ->paginate(10)
-            ->pluck('airports')
-            ->pluck('0')
+            ->get()
+            ->pluck('airports.0')
             ->paginate(10);
     }
 }
